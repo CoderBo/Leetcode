@@ -23,7 +23,6 @@ public class SimplifyPath
         LinkedList<String> list = new LinkedList<String>();
         for(String s : array)
         {
-            System.out.println(list);
             if(s.length() == 0 || s.equals(".")) continue;
             else if(s.equals(".."))
             {

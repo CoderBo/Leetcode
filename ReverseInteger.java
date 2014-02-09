@@ -13,17 +13,15 @@ public class ReverseInteger
 {
     static int reverse(int x)
     {
-        boolean negetive = false;
-        String s = Integer.toString(x);
-        StringBuilder s2 = new StringBuilder(s);
-        if(s2.charAt(0) == '-')
+         boolean negative = x < 0 ? true : false;
+        if(x < 0) x = -x;
+        int result = 0;
+        while(x > 0)
         {
-            negetive = true;
-            s2.deleteCharAt(0);
+            result = result * 10 + x % 10;
+            x /= 10;
         }
-        s2.reverse();
-        int result = Integer.parseInt(s2.toString());
-        return negetive == true ? result * -1 : result;
+        return negative? -result : result;
     }
     public static void main(String[] args)
     {
