@@ -20,35 +20,15 @@ class TreeLinkNode
 }
 public class PopulatingNextRightPointersinEachNode 
 {
-    static void connect(TreeLinkNode root)
+    public void connect(TreeLinkNode root) {
+        connect(root, null);
+    }
+    public void connect(TreeLinkNode root, TreeLinkNode neighbour)
     {
-        if(root == null) return;
-        ArrayList<TreeLinkNode> array = new ArrayList<TreeLinkNode>();
-        array.add(root);
-        while(!array.isEmpty())
-        {
-            ArrayList<TreeLinkNode> temp = new ArrayList<TreeLinkNode>();
-            for(TreeLinkNode i : array)
-            {   
-                if(i.left != null)
-                {
-                    temp.add(i.left);
-                }
-                if(i.right != null)
-                {
-                    temp.add(i.right);
-                }
-            }
-            if(temp.size() != 0)
-            {
-                for(int i = 0; i < temp.size() - 1; i++)
-                {
-                    temp.get(i).next = temp.get(i + 1);
-                }
-                temp.get(temp.size() - 1).next = null;
-            }
-            array = temp;
-        }
-         
+        if(root == null || root.left == null) return;
+        root.left.next = root.right;
+        if(neighbour != null) root.right.next = neighbour.left;
+        connect(root.left, root.left.next);
+        connect(root.right, root.right.next);
     }
 }
