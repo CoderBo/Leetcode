@@ -16,18 +16,18 @@ public class UniqueBinarySearchTrees
     {
         return numTrees(1, n);
     }
-    static int numTrees(int a, int b)
+    static int numTrees(int start, int end)
     {
-        if(a > b) return 0;
-        if(a == b) return 1;
+        if(start == end) return 1;
+        if(start > end) return 0;
         int result = 0;
-        for(int i = a; i <= b; i++)
+        for(int i = start; i <= end; i++)
         {
-            int left = numTrees(a, i - 1);
-            int right = numTrees(i + 1, b);
+            int left = numTrees(start, i - 1);
+            int right = numTrees(i + 1, end);
             if(left == 0) result += right;
             else if(right == 0) result += left;
-            else result = result + left * right;
+            else result += left * right;
         }
         return result;
     }
