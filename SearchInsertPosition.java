@@ -17,7 +17,6 @@ public class SearchInsertPosition
     }
     static int searchInsert(int[] A, int target, int start, int end)
     {
-        //System.out.println(start + " " + end);
         int middleIndex = (start + end) / 2;
         int middle = A[middleIndex];
         if(target == middle) return middleIndex;
