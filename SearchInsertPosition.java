@@ -12,17 +12,22 @@ package leetcode;
  */
 public class SearchInsertPosition 
 {
-    static int searchInsert(int[] A, int target)
+    static int searchInsert(int[] A, int target) {
+        return searchInsert(A, target, 0, A.length - 1);
+    }
+    static int searchInsert(int[] A, int target, int start, int end)
     {
-        for(int i = 0; i < A.length; i++)
-        {
-            if(target <= A[i]) return i;
-        }
-        return A.length;
+        //System.out.println(start + " " + end);
+        int middleIndex = (start + end) / 2;
+        int middle = A[middleIndex];
+        if(target == middle) return middleIndex;
+        if(end <= start) return target < A[start]? start : start + 1;
+        if(target < middle) return searchInsert(A, target, start, middleIndex - 1);
+        else return searchInsert(A, target, middleIndex + 1, end);
     }
     public static void main(String[] args)
     {
-        int[] array = {1};
+        int[] array = {1, 3};
         System.out.println(searchInsert(array, 0));
     }
 }
