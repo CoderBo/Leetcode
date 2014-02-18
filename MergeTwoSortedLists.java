@@ -14,51 +14,42 @@ public class MergeTwoSortedLists
 {
     static ListNode mergeTwoLists(ListNode l1, ListNode l2)
     {
-        ListNode i = l1;
-        ListNode j = l2;
-        ListNode head;
-        if(l1 == null && l2 == null) return null;
+        ListNode head = new ListNode(0);
+        ListNode current = head;
         if(l1 == null) return l2;
         if(l2 == null) return l1;
-        if(i.val < j.val)
+        ListNode p = l1;
+        ListNode q = l2;
+        while(p != null && q != null)
         {
-            head = new ListNode(i.val);
-            i = i.next;
-        }
-        else
-        {
-            head = new ListNode(j.val);
-            j = j.next;
-        }
-        
-        ListNode p = head;
-        while(i != null && j != null)
-        {
-            if(i.val < j.val)
+            if(p.val < q.val)
             {
-                p.next = new ListNode(i.val);
-                i = i.next;
+                ListNode item = new ListNode(p.val);
+                current.next = item;
+                p = p.next;
             }
             else
             {
-                p.next = new ListNode(j.val);
-                j = j.next;
+                ListNode item = new ListNode(q.val);
+                current.next = item;
+                q = q.next;
             }
+            current = current.next;
+        }
+        while(p != null)
+        {
+            ListNode item = new ListNode(p.val);
+            current.next = item;
+            current = current.next;
             p = p.next;
         }
-        
-        while(i != null)
+        while(q != null)
         {
-            p.next = new ListNode(i.val);
-            p = p.next;
-            i = i.next;
+            ListNode item = new ListNode(q.val);
+            current.next = item;
+            current = current.next;
+            q = q.next;
         }
-        while(j != null)
-        {
-            p.next = new ListNode(j.val);
-            p = p.next;
-            j = j.next;
-        }      
-        return head;
+        return head.next;
     }
 }

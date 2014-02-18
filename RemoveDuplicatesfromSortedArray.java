@@ -16,16 +16,15 @@ public class RemoveDuplicatesfromSortedArray
 {
     static int removeDuplicates(int[] A)
     {
+        int current = 0;
+        int i = 1;
         if(A.length <= 1) return A.length;
-        int i = 0;
-        for(int j = 0; j < A.length; j++)
+        while(i < A.length)
         {
-            if(A[j] != A[i])
-            {
-                A[++i] = A[j];
-            }
+            if(A[current] == A[i]) i++;
+            else A[++current] = A[i++];
         }
-        return i + 1;
+        return current + 1;
     }
     public static void main(String[] args)
     {
