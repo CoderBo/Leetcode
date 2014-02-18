@@ -53,7 +53,6 @@ public class RomantoInteger
             char next = s.charAt(i + 1);
             if(table.get(current) >= table.get(next)) result += table.get(current);
             result -= table.get(current);
-            System.out.println(result);
         }
         return result;
     }
