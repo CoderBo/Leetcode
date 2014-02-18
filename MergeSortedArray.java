@@ -13,29 +13,13 @@ public class MergeSortedArray
 {
     static void merge(int A[], int m, int []B, int n)
     {
-        int indexA = m - 1;
-        int indexB = n - 1;
-        int indexNewArray = m + n - 1;
-        while(indexA >= 0 && indexB >= 0)
+        int current = m + n - 1;
+        int i = m - 1;
+        int j = n - 1;
+        while(j >= 0)
         {
-            if(A[indexA] >= B[indexB])
-            {
-                A[indexNewArray] = A[indexA];
-                indexA--;
-            }
-            else
-            {
-                A[indexNewArray] = B[indexB];
-                indexB--;
-            }
-            indexNewArray--;
-        }
-        
-        while(indexB >= 0)
-        {
-            A[indexNewArray] = B[indexB];
-            indexB--;
-            indexNewArray--;
+            if(i < 0 || A[i] < B[j]) A[current--] = B[j--];
+            else A[current--] = A[i--];
         }
     }
     public static void main(String[] args)
