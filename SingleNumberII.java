@@ -27,9 +27,30 @@ public class SingleNumberII
         }
         return one;
     }
+    static int singleNumber2(int[] A) {
+        int[] count = new int[32];
+        int flag = 0;
+        int result = 0;
+        for(int i : A)
+        {
+            if(i < 0)
+            {
+                flag = (flag + 1) % 3;
+                i = -i;
+            }
+            for(int j = 0; j < 32; j++)
+            {
+                if((i & (1 << j)) != 0) 
+                    count[j] = (count[j] + 1) % 3;
+            }
+        }
+        for(int i = 0; i < 32; i++)
+            result |= count[i] << i;
+        return flag == 1? -result : result;
+    }
     public static void main(String[] args)
     {
-        int[] array = {2,5,9,2,1,9,5,5,2,9};
-        System.out.println(singleNumber(array));
+        int[] array = {-2,-2,1,1,-3,1,-3,-3,-4,-2};
+        System.out.println(singleNumber2(array));
     }
 }
