@@ -23,16 +23,16 @@ public class GrayCode
             result.add(0);
             return result;
         }
-        if(n == 1) 
+        if(n == 1)
         {
             result.add(0);
             result.add(1);
             return result;
         }
         ArrayList<Integer> sub = grayCode(n - 1);
-        for(int i : sub) result.add(i);
-        Collections.reverse(sub);
-        for(int i : sub) result.add(i | (1 << (n - 1)));
+        result.addAll(sub);
+        for(int i = sub.size() - 1; i >= 0; i--)
+            result.add(sub.get(i) | 1 << (n - 1));
         return result;
     }
     public static void main(String[] args)
