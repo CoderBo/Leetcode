@@ -5,9 +5,7 @@
 
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
+import java.util.*;
 /**
  * problem:Given a non-negative integer n representing the total number of bits in the code, 
  * print the sequence of gray code. A gray code sequence must begin with 0.
