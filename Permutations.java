@@ -11,41 +11,36 @@ import java.util.ArrayList;
  */
 public class Permutations 
 {
-    static ArrayList<Integer> charAt(int first, int n, ArrayList<Integer> item)
+    static ArrayList<ArrayList<Integer>> permute(int []num)
     {
-        item.add(n, first);
-        return item;
+        if(num.length == 0) return new ArrayList<ArrayList<Integer>>();
+        else return permute(num, num.length - 1);
     }
-    static ArrayList<ArrayList<Integer>> permute(int[] num)
+    static ArrayList<ArrayList<Integer>> permute(int []num, int n)
     {
-        if(num == null) return null;
-        ArrayList<ArrayList<Integer>> permutation = new ArrayList<ArrayList<Integer>>();
-        if(num.length == 0)
-        {          
-            permutation.add(new ArrayList<Integer>());
-            return permutation;
-        }
-        int first = num[0];
-        int[] remain = new int[num.length - 1];
-        for(int i = 1; i < num.length; i++)
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(n == 0)
         {
-            remain[i - 1] = num[i];
+            ArrayList<Integer> sub = new ArrayList<Integer>();
+            sub.add(num[0]);
+            result.add(sub);
+            return result;
         }
-        ArrayList<ArrayList<Integer>> array = permute(remain);
-        for(ArrayList<Integer> item : array)
+        ArrayList<ArrayList<Integer>> previous = permute(num, n - 1);
+        int item = num[n];
+        for(ArrayList<Integer> a : previous)
         {
-            for(int i = 0; i <= item.size(); i++)
+            for(int i = 0; i <= a.size(); i++)
             {
-                ArrayList<Integer> newItem = new ArrayList<Integer>();
-                for(Integer x : item)
-                {
-                    newItem.add(x);
-                }
-                ArrayList<Integer> newArray = charAt(first, i, newItem);
-                permutation.add(newArray);
+                ArrayList<Integer> temp = new ArrayList<Integer>();
+                temp.addAll(a.subList(0, i));
+                temp.add(item);
+                temp.addAll(a.subList(i, a.size()));
+                result.add(temp);
             }
+            
         }
-        return permutation;
+        return result;
     }
     public static void main(String[] args)
     {
