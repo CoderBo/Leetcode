@@ -45,6 +45,30 @@ public class SortColors
             A[index++] = 2;
         }
     }
+    static void sortColors2(int[] A) {
+        int i = 0;
+        int current = 0;
+        int j = A.length - 1;
+        while(current <= j)
+        {
+            if(A[current] == 1) current++;
+            else if(A[current] == 0)
+            {
+                int temp = A[i];
+                A[i] = A[current];
+                A[current] = temp;
+                i++;
+                current++;
+            }
+            else
+            {
+                int temp = A[j];
+                A[j] = A[current];
+                A[current] = temp;
+                j--;
+            }
+        }
+    }
     public static void main(String[] args)
     {
         int[] array = {0,1,2,2,2,0,0,1,0,1,2,2,1,1,2,1,0,1,2};
