@@ -39,6 +39,7 @@ public class PlusOne
                     digits[i] -= 10;
                     digits[i-1]++;
                 }
+                else break;
             }
             return digits;
         }
