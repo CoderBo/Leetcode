@@ -58,6 +58,30 @@ public class Combinations
             return result;
         }
     }
+    static ArrayList<ArrayList<Integer>> combine2(int n, int k)
+    {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> sub = new ArrayList<Integer>();
+        setCombine(1, k, n, result, sub);
+        return result;
+    }
+    static void setCombine(int start, int k,int n, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub)
+    {
+        if(sub.size() == k)
+        {
+            ArrayList<Integer> temp = new ArrayList<Integer>(sub);
+            result.add(temp);
+        }
+        else
+        {
+            for(int i = start; i <= n; i++)
+            {
+                sub.add(i);
+                setCombine(i + 1, k, n, result, sub);
+                sub.remove(sub.size() - 1);            
+            }
+        }
+    }
     public static void main(String[] args)
     {
         System.out.println(combine(4, 3));
