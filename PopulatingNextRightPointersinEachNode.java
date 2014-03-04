@@ -20,15 +20,12 @@ class TreeLinkNode
 }
 public class PopulatingNextRightPointersinEachNode 
 {
-    public void connect(TreeLinkNode root) {
-        connect(root, null);
-    }
-    public void connect(TreeLinkNode root, TreeLinkNode neighbour)
+    public void connect(TreeLinkNode root)
     {
         if(root == null || root.left == null) return;
         root.left.next = root.right;
-        if(neighbour != null) root.right.next = neighbour.left;
-        connect(root.left, root.left.next);
-        connect(root.right, root.right.next);
+        if(root.next != null) root.right.next = root.next.left;
+        connect(root.left);
+        connect(root.right);
     }
 }
