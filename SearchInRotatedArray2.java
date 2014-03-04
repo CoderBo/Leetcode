@@ -68,7 +68,7 @@ public class SearchInRotatedArray2
     public static void main(String[] args)
     {
         int[] array = {3,1,1};
-        System.out.println(search(array, -3));
+        System.out.println(search(array, 3));
     }
 }
 
