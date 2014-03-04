@@ -44,5 +44,38 @@ public class PopulatingNextRightPointersinEachNodeII
             }
             array = temp;
         }
-    }  
+    }
+    public void connect2(TreeLinkNode root) {
+        if(root == null || (root.left == null && root.right == null)) return;
+        TreeLinkNode p = root.next;
+        while(p != null)
+        {
+            if(p.left != null)
+            {
+                p = p.left;
+                break;
+            }
+            if(p.right != null)
+            {
+                p = p.right;
+                break;
+            }
+            p = p.next;
+        }
+        if(root.right == null)
+        {
+            root.left.next = p;
+        }
+        else if(root.left == null)
+        {
+            root.right.next = p;
+        }
+        else
+        {
+            root.left.next = root.right;
+            root.right.next = p;
+        }
+        connect2(root.right);
+        connect2(root.left);
+    }
 }
