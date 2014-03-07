@@ -40,7 +40,25 @@ public class PathSumII
         path.remove(path.size() - 1);
         
     }
-    
+    public static ArrayList<ArrayList<Integer>> pathSum2(TreeNode root, int sum) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(root == null) return result;
+        ArrayList<Integer> sub = new ArrayList<Integer>();
+        generate(root, sum, sub, result);
+        return result;
+    }
+    static void generate(TreeNode root, int sum, ArrayList<Integer> sub, ArrayList<ArrayList<Integer>> result)
+    {
+        if(root == null && sum == 0)
+        {
+            result.add(sub);
+            return;
+        }
+        ArrayList<Integer> subLeft = new ArrayList<Integer>(sub);
+        ArrayList<Integer> subRight = new ArrayList<Integer>(sub);
+        generate(root.left, sum - root.val, subLeft, result);
+        generate(root.right, sum - root.val, subRight, result);
+    }
     public static void main(String[] args)
     {
         TreeNode root = new TreeNode(5);
