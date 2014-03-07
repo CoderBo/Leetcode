@@ -35,6 +35,18 @@ public class LengthofLastWord
             return result;
         }
     }
+    public int lengthOfLastWord2(String s) {
+        int result = 0;
+        int i = s.length() - 1;
+        while(i >= 0 && s.charAt(i) == ' ') i--;
+        if(i < 0) return 0;
+        while(i >= 0 && s.charAt(i) != ' ')
+        {
+            result++;
+            i--;
+        }
+        return result;
+    }
     public static void main(String[] args)
     {
         System.out.println(lengthOfLastWord("abc "));
