@@ -34,6 +34,31 @@ public class Subsets
         }
         return result;
     }
+    
+    public ArrayList<ArrayList<Integer>> subsets2(int[] S) {
+        if(S.length == 0) return new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(S);
+        return subsets(S, S.length - 1);
+    }
+    public ArrayList<ArrayList<Integer>> subsets(int[] S, int index)
+    {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(index < 0)
+        {
+            ArrayList<Integer> sub = new ArrayList<Integer>();
+            result.add(sub);
+            return result;
+        }
+        ArrayList<ArrayList<Integer>> pre = subsets(S, index - 1);
+        result.addAll(pre);
+        for(ArrayList<Integer> a : pre)
+        {
+            ArrayList<Integer> temp = new ArrayList<Integer>(a);
+            temp.add(S[index]);
+            result.add(temp);
+        }
+        return result;
+    }
     public static void main(String[] arg)
     {
         int[] array = {1,1};
