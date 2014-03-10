@@ -34,6 +34,7 @@ public class UniquePaths
             return dp[x][y];
         }
     }
+    
     public static void main(String[] args)
     {
         System.out.println(uniquePaths(2, 2));
