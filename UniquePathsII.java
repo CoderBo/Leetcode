@@ -24,7 +24,11 @@ public class UniquePathsII
     }
     static int uniquePathsWithObstacles(int[][] obstacleGrid, int x, int y, int[][] dp)
     {
-        if(dp[x][y] != 0) return dp[x][y];
+        if(dp[x][y] != 0)
+        {
+            System.out.println("x = " + x + " y = " + y);
+            return dp[x][y];
+        }
         if(x == 0 && y == 0 && obstacleGrid[x][y] != 1) return 1;
         if(obstacleGrid[x][y] == 1) return 0;
         if(x == 0) return uniquePathsWithObstacles(obstacleGrid, x, y - 1, dp);
@@ -35,9 +39,40 @@ public class UniquePathsII
             return dp[x][y];
         }
     }
+    
+    static int uniquePathsWithObstacles2(int[][] obstacleGrid) {
+        if(obstacleGrid.length == 0) return 0;
+        int[][] dp = new int[obstacleGrid.length][obstacleGrid[0].length];
+        return uniquePathsWithObstacles2(obstacleGrid, 0, 0, dp);
+    }
+    static int uniquePathsWithObstacles2(int[][] obstacleGrid, int x, int y, int[][] dp)
+    {
+        if(dp[x][y] != 0) 
+        {
+            System.out.println("x = " + x + " y = " + y);
+            return dp[x][y];
+        }
+        if(obstacleGrid[x][y] == 1) return 0;
+        if(x == obstacleGrid.length - 1 && y == obstacleGrid[0].length - 1) return 1;     
+        if(x == obstacleGrid.length - 1)
+        {
+            dp[x][y] = uniquePathsWithObstacles2(obstacleGrid, x, y + 1, dp);
+            return dp[x][y];
+        }
+        if(y == obstacleGrid[0].length - 1)
+        {
+            dp[x][y] = uniquePathsWithObstacles2(obstacleGrid, x + 1, y, dp);
+            return dp[x][y];
+        }
+        else
+        {
+            dp[x][y] = uniquePathsWithObstacles2(obstacleGrid, x + 1, y, dp) + uniquePathsWithObstacles2(obstacleGrid, x, y + 1, dp);
+            return dp[x][y];
+        }
+    }
     public static void main(String[] args)
     {
-        int[][] grid = {{0,0,0},{0,1,0},{0,0,0}};
-        System.out.println(uniquePathsWithObstacles(grid));
+        int[][] grid = {{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0},{0,0,0}};
+        System.out.println(uniquePathsWithObstacles2(grid));
     }
 }
