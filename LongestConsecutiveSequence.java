@@ -6,6 +6,8 @@
 package leetcode;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * problem: Given an unsorted array of integers, 
@@ -38,10 +40,38 @@ public class LongestConsecutiveSequence
         if(length > result) result = length;
         return result;
     }
+    
+    static int longestConsecutive2(int[] num) {
+        if(num.length == 0) return 0;
+        HashSet<Integer> set = new HashSet<Integer>();
+        for(int i : num) set.add(i);
+        int max = 0;
+        for(int i : num)
+        {
+            if(!set.contains(i)) continue;
+            int count = 1;
+            int left = i - 1;
+            int right = i + 1;
+            while(set.contains(left))
+            {
+                count++;
+                set.remove(left);
+                left--;
+            }
+            while(set.contains(right))
+            {
+                count++;
+                set.remove(right);
+                right++;
+            }
+            max = Math.max(count, max);
+        }
+        return max;
+    }
     public static void main(String[] args)
     {
         int[] array = {100, 4, 2000, 1, 3 ,2};
         int[] array2 = {0,0,0};
-        System.out.println(longestConsecutive(array2));
+        System.out.println(longestConsecutive2(array));
     }
 }
