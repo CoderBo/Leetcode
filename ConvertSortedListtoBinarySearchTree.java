@@ -52,6 +52,24 @@ public class ConvertSortedListtoBinarySearchTree
         node.left = sortedListToBST(head);
         return node;
     }
+    
+    public TreeNode sortedListToBST2(ListNode head) {
+        if(head == null) return null;
+        if(head.next == null) return new TreeNode(head.val);
+        ListNode fast = head.next;
+        ListNode normal = head;
+        while(fast.next != null && fast.next.next != null)
+        {
+            fast = fast.next.next;
+            normal = normal.next;
+        }
+        ListNode newHead = normal.next.next;
+        TreeNode root = new TreeNode(normal.next.val);
+        normal.next = null;
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(newHead);
+        return root;
+    }
     public static void main(String[] args)
     {
         ListNode head = new ListNode(1);
