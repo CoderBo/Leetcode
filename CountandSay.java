@@ -18,29 +18,20 @@ public class CountandSay
 {
     static String countAndSay(int n)
     {
-        if(n <= 0) return null;
         if(n == 1) return "1";
+        String pre = countAndSay(n - 1);
+        pre += "a";
         StringBuilder result = new StringBuilder();
-        String previous = countAndSay(n - 1);
-        previous += " ";
-        int i = 1;
         int count = 1;
-        char base = previous.charAt(0);
-        while(i <= previous.length() - 1)
+        for(int i = 0; i < pre.length() - 1; i++)
         {
-            if(previous.charAt(i) == base)
+            if(pre.charAt(i + 1) != pre.charAt(i))
             {
-                count++;
-                i++;
-            }
-            else
-            {
-                result.append(new Integer(count).toString());
-                result.append(base);
-                base = previous.charAt(i);
+                result.append(count);
+                result.append(pre.charAt(i));
                 count = 1;
-                i++;
             }
+            else count++;
         }
         return result.toString();
     }
