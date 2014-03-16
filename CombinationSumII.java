@@ -25,7 +25,7 @@ public class CombinationSumII
     static ArrayList<ArrayList<Integer>> combinationSum2(int[] candidates, int target, int start, HashSet<ArrayList<Integer>> set)
     {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
-        if(candidates.length == 0 || target < candidates[0]) return result;
+        if(candidates.length == 0 || target < candidates[start]) return result;
         for(int j = start; j < candidates.length; j++)
         {
             int i = candidates[j];
@@ -57,9 +57,50 @@ public class CombinationSumII
          }
         return result;
     }
+    
+    static ArrayList<ArrayList<Integer>> combinationSum3(int[] candidates, int target) {
+        if(candidates.length == 0) return new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(candidates);
+        return combinationSum3(candidates, target, 0, new HashSet<ArrayList<Integer>>());
+    }
+    static ArrayList<ArrayList<Integer>> combinationSum3(int[] candidates, int target, int start, HashSet<ArrayList<Integer>> set)
+    {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(start >= candidates.length || target < candidates[start]) return result;
+        for(int i = start; i < candidates.length; i++)
+        {
+            if(target == candidates[i])
+            {
+                ArrayList<Integer> sub = new ArrayList<Integer>();
+                sub.add(candidates[i]);
+                result.add(sub);
+                //return result;
+            }
+            else
+            {
+                ArrayList<ArrayList<Integer>> pre = combinationSum3(candidates, target - candidates[i], i + 1, set);
+                if(!pre.isEmpty())
+                {
+                    ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>(pre);
+                    for(ArrayList<Integer> a : temp)
+                    {
+                        a.add(0, candidates[i]);
+                        {
+                            if(!set.contains(a))
+                            {
+                                result.add(a);
+                                set.add(a);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
     public static void main(String[] args)
     {
         int[] condidates = {1,1};
-        System.out.println(combinationSum2(condidates, 1));
+        System.out.println(combinationSum3(condidates, 1));
     }
 }

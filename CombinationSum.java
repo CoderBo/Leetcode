@@ -57,9 +57,50 @@ public class CombinationSum
          }
         return result;
     }
+    
+    static ArrayList<ArrayList<Integer>> combinationSum2(int[] candidates, int target) {
+        if(candidates.length == 0) return new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(candidates);
+        return combinationSum(candidates, target, 0, new HashSet<ArrayList<Integer>>());
+    }
+    static ArrayList<ArrayList<Integer>> combinationSum2(int[] candidates, int target, int start, HashSet<ArrayList<Integer>> set)
+    {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(start >= candidates.length || target < candidates[start]) return result;
+        for(int i = start; i < candidates.length; i++)
+        {
+            if(target == candidates[i])
+            {
+                ArrayList<Integer> sub = new ArrayList<Integer>();
+                sub.add(candidates[i]);
+                result.add(sub);
+                return result;
+            }
+            else
+            {
+                ArrayList<ArrayList<Integer>> pre = combinationSum2(candidates, target - candidates[i], i, set);
+                if(!pre.isEmpty())
+                {
+                    ArrayList<ArrayList<Integer>> temp = new ArrayList<ArrayList<Integer>>(pre);
+                    for(ArrayList<Integer> a : temp)
+                    {
+                        a.add(0, candidates[i]);
+                        {
+                            if(!set.contains(a))
+                            {
+                                result.add(a);
+                                set.add(a);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
     public static void main(String[] args)
     {
         int[] condidates = {10,1,2,7,6,1,5};
-        System.out.println(combinationSum(condidates, 8));
+        System.out.println(combinationSum2(condidates, 8));
     }
 }
