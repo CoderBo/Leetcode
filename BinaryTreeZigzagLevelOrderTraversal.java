@@ -16,66 +16,40 @@ import java.util.Queue;
  */
 public class BinaryTreeZigzagLevelOrderTraversal 
 {
-    static ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root)
+    static ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) 
     {
-        if(root == null) return new ArrayList<ArrayList<Integer>>();
-        TreeNode p = root;
-        Queue<TreeNode> queue = new LinkedList<TreeNode>();
-        queue.offer(p);
-        ArrayList<ArrayList<TreeNode>> result = new ArrayList<ArrayList<TreeNode>>();
-        ArrayList<TreeNode> head = new ArrayList<TreeNode>();
-        head.add(p);
-        result.add(head);
-        boolean inorder = false;
-        while(!queue.isEmpty())
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(root == null) return result;
+        int currentLayer = 1;
+        Queue<TreeNode> upLevel = new LinkedList<TreeNode>();
+        ArrayList<Integer> temp = new ArrayList<Integer>();
+        temp.add(root.val);
+        result.add(temp);
+        upLevel.offer(root);
+        while(!upLevel.isEmpty())
         {
-            System.out.println(inorder);
-            ArrayList<TreeNode> sub = new ArrayList<TreeNode>();
-            p = queue.poll();
-            if(inorder == true)
+            currentLayer++;
+            Queue<TreeNode> downLevel = new LinkedList<TreeNode>();
+            ArrayList<Integer> sub = new ArrayList<Integer>();
+            while(!upLevel.isEmpty())
             {
-                ArrayList<TreeNode> temp = new ArrayList<TreeNode>();
-                for(TreeNode i : result.get(result.size() - 1)) temp.add(i);
-                Collections.reverse(temp);
-                for(TreeNode i: temp)
+                TreeNode current = upLevel.poll();
+                if(current.left != null)
                 {
-                    if(i.left != null) sub.add(i.left);
-                    if(i.right != null) sub.add(i.right);
+                    downLevel.offer(current.left);
+                    sub.add(current.left.val);
                 }
-                inorder = false;
-            }
-            else
-            {
-                for(TreeNode i : result.get(result.size() - 1))
+                if(current.right != null)
                 {
-                    if(i.left != null) sub.add(i.left);
-                    if(i.right != null) sub.add(i.right);
+                    downLevel.offer(current.right);
+                    sub.add(current.right.val);
                 }
-                Collections.reverse(sub);
-                inorder = true;
             }
-            result.add(sub);
-            if(p.left != null)
-            {
-                queue.offer(p.left);
-            }
-            if(p.right != null)
-            {
-                queue.offer(p.right);
-            }
-            if(!result.contains(sub)) result.add(sub);
+            if(currentLayer % 2 == 0) Collections.reverse(sub);
+            if(!sub.isEmpty()) result.add(sub);
+            upLevel = downLevel;
         }
-        ArrayList<ArrayList<Integer>> answer = new ArrayList<ArrayList<Integer>>();
-        for(ArrayList<TreeNode> t : result)
-        {
-            ArrayList<Integer> subT = new ArrayList<Integer>();
-            for(TreeNode node : t)
-            {
-                subT.add(node.val);
-            }
-            if(!subT.isEmpty() ) answer.add(subT);
-        }
-        return answer;
+        return result;
     }
     public static void main(String[] args)
     {
