@@ -15,29 +15,27 @@ public class PartitionList
 {
     static ListNode partition(ListNode head, int x)
     {
-        if(head == null) return null;
-        ListNode preHead = new ListNode(0);
-        preHead.next = head;
-        ListNode tail = head;
-        int length = 0;
-        while(tail.next != null)
+        ListNode leftHead = new ListNode(0);
+        ListNode rightHead = new ListNode(0);
+        ListNode p = leftHead;
+        ListNode q = rightHead;
+        ListNode current = head;
+        while(current != null)
         {
-            tail = tail.next;
-            length++;
-        }
-        ListNode p = preHead;
-        for(int i = 0; i <= length; i++)
-        {
-            if(p.next.val >= x)
+            if(current.val < x)
             {
-                tail.next = p.next;
-                tail = tail.next;
-                p.next = p.next.next;
-                tail.next = null;
+                p.next = new ListNode(current.val);
+                p = p.next;
             }
-            else p = p.next;
+            else
+            {
+                q.next = new ListNode(current.val);
+                q = q.next;
+            }
+            current = current.next;
         }
-        return preHead.next;
+        p.next = rightHead.next;
+        return leftHead.next;
     }
     public static void main(String[] args)
     {
