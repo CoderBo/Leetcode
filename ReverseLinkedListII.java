@@ -14,42 +14,27 @@ public class ReverseLinkedListII
 {
     static ListNode reverseBetween(ListNode head, int m, int n)
     {
-        if(m == n) return head;
-        ListNode front;
-        boolean flag = false;
-        if(m == 1) 
-        {
-            front = new ListNode(0);
-            front.next = head;
-            flag = true;
-        }
-      
-        else
-        {
-            front = head;
-            for(int i = 0; i < m - 2; i++)
-            {
-                front = front.next;
-            }
-        }
-        
-        ListNode end = head;
-        for(int i = 0; i < n; i++)
-        {
-            end = end.next;
-        }
-        ListNode p = front.next;
-        ListNode q = p.next;    
+        if(head == null) return head;
+        ListNode preHead = new ListNode(0);
+        preHead.next = head;
+        ListNode p = preHead;
+        for(int i = 0; i < m - 1; i++) p = p.next;
+        ListNode end = preHead;
+        for(int i = 0; i < n; i++) end = end.next;
+        ListNode q = p.next;
         p.next = end;
-        while(q != end)
+        ListNode r = q.next;
+        q.next = end.next;
+        p = q;
+        q = r;
+        while(p != end)
         {
-            ListNode r = q.next;
+            r = q.next;
             q.next = p;
             p = q;
             q = r;
         }
-        front.next = p;
-        return flag? front.next : head;
+        return preHead.next;
     }
     public static void main(String[] args)
     {
