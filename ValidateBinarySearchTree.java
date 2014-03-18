@@ -31,6 +31,21 @@ public class ValidateBinarySearchTree
         }
         return true;
     }
+    
+    static boolean isValidBST2(TreeNode root) {
+        int[] flag = new int[1];
+        flag[0] = Integer.MIN_VALUE;
+        return isValid(root, flag);
+    }
+    static boolean isValid(TreeNode root, int[] flag)
+    {
+        if(root == null) return true;
+        if(isValid(root.left, flag) == false) return false;
+        if(root.val <= flag[0]) return false;
+        flag[0] = root.val;
+        if(isValid(root.right, flag) == false) return false;
+        return true;
+    }
     public static void main(String[] args)
     {
         TreeNode root = new TreeNode(5);
