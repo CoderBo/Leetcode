@@ -6,6 +6,7 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import static leetcode.Permutations.permute;
 
 /**
@@ -15,45 +16,38 @@ import static leetcode.Permutations.permute;
  */
 public class PermutationsII 
 {
-    static ArrayList<Integer> charAt(int first, int n, ArrayList<Integer> item)
-    {
-        item.add(n, first);
-        return item;
+    static ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+        return permuteUnique(num, 0, new HashSet<ArrayList<Integer>>());
     }
-    static ArrayList<ArrayList<Integer>> permuteUnique(int[] num)
+    static ArrayList<ArrayList<Integer>> permuteUnique(int[] num, int start, HashSet<ArrayList<Integer>> set)
     {
-        if(num == null) return null;
-        ArrayList<ArrayList<Integer>> permutation = new ArrayList<ArrayList<Integer>>();
-        if(num.length == 0)
-        {          
-            permutation.add(new ArrayList<Integer>());
-            return permutation;
-        }
-        int first = num[0];
-        int[] remain = new int[num.length - 1];
-        for(int i = 1; i < num.length; i++)
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(start == num.length - 1)
         {
-            remain[i - 1] = num[i];
+            ArrayList<Integer> sub = new ArrayList<Integer>();
+            sub.add(num[start]);
+            result.add(sub);
+            return result;
         }
-        ArrayList<ArrayList<Integer>> array = permuteUnique(remain);
-        for(ArrayList<Integer> item : array)
+        ArrayList<ArrayList<Integer>> pre = permuteUnique(num, start + 1, set);
+        for(ArrayList<Integer> a : pre)
         {
-            for(int i = 0; i <= item.size(); i++)
+            for(int i = 0; i <= a.size(); i++)
             {
-                ArrayList<Integer> newItem = new ArrayList<Integer>();
-                for(Integer x : item)
+                ArrayList<Integer> sub = new ArrayList<Integer>(a);
+                sub.add(i, num[start]);
+                if(!sub.isEmpty() && !set.contains(sub))
                 {
-                    newItem.add(x);
+                    result.add(sub);
+                    set.add(sub);
                 }
-                ArrayList<Integer> newArray = charAt(first, i, newItem);
-                if(!permutation.contains(newArray)) permutation.add(newArray);
             }
         }
-        return permutation;
+        return result;
     }
     public static void main(String[] args)
     {
-        int[] array = {1,2,3};
+        int[] array = {1,1,3};
         System.out.println(permuteUnique(array));
     }
 }
