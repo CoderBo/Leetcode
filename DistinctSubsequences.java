@@ -31,10 +31,19 @@ public class DistinctSubsequences
                 if(S.charAt(j -1) == T.charAt(i - 1)) dp[i][j] += dp[i - 1][j - 1];
             }
         }
+        
+        for(int i = 0; i <= T.length(); i++)
+        {
+            for(int j = 0; j <= S.length(); j++)
+            {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
+        }
         return dp[T.length()][S.length()];
     }
     public static void main(String[] args)
     {
-        System.out.println(numDistinct("rabbbbbbbbbbbit", "rabbit"));
+        System.out.println(numDistinct("rabbbit", "rabbit"));
     }
 }
