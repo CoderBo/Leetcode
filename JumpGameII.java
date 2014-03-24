@@ -14,26 +14,19 @@ package leetcode;
  */
 public class JumpGameII 
 {
-    static int canJump2(int[] A)
-    {
-        int maxx=0;
-        int temp = 0;
-        int num = 0;
-        for(int i = 0; i < A.length;)  
-        {  
-            if(temp >= A.length - 1) break;
-            while(i <= temp)  
-            {  
-                maxx = Math.max(maxx, i + A[i]); 
-                i++;
-            }  
-            num++;
-            temp = maxx;
-        }  
-        return num;
-    }
-    public static void main(String[] args)
-    {
-        
+    public int jump(int[] A) {
+        int step = 0;
+        int last = 0;
+        int oneMoreStep = 0;
+        for(int i = 0; i < A.length; i++)
+        {
+            if(i > last)
+            {
+                last = oneMoreStep;
+                step++;
+            }
+            oneMoreStep = Math.max(oneMoreStep, i + A[i]);
+        }
+        return step;
     }
 }
