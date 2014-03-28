@@ -13,58 +13,44 @@ import java.util.ArrayList;
  */
 public class ZigZagConversion 
 {
-    static String convert(String s, int nRows)
-    {
-        if(nRows == 1) return s;
-        ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-        for(int i = 0; i < nRows; i++)
-        {
-            ArrayList<String> sub = new ArrayList<String>();
-            result.add(sub);
-        }
-        boolean inorder = true;
+    static String convert(String s, int nRows) {
+        if(s.length() == 0 || nRows <= 1 || s.length() <= nRows) return s;
+        ArrayList<String> list = new ArrayList<String>();
+        for(int i = 0; i < nRows; i++) list.add("");
         int index = 0;
+        boolean goDown = true;
         for(int i = 0; i < s.length(); i++)
         {
-           
-            StringBuilder temp = new StringBuilder();
-            temp.append(s.charAt(i));
-            String word = temp.toString();
-            if(inorder)
+            String temp = list.get(index);
+            temp += s.charAt(i) + "";
+            list.set(index, temp);
+            if(goDown)
             {
-                result.get(index).add(word);
-                index++;
-                if(index >= nRows)
+                if(index == nRows - 1)
                 {
-                    inorder = false;
-                    index -= 2;
+                    goDown = false;
+                    index--;
                 }
+                else index++;
             }
             else
             {
-                result.get(index).add(word);
-                index--;
-                if(index < 0)
+                if(index == 0)
                 {
-                    inorder = true;
-                    index += 2;
+                    goDown = true;
+                    index++;
                 }
+                else index--;
             }
         }
-        StringBuilder newResult = new StringBuilder();
-        for(ArrayList<String> i : result)
-        {
-            for(String j : i)
-            {
-                newResult.append(j);
-            }
-        }
-        return newResult.toString();
+        StringBuilder result = new StringBuilder();
+        for(String sub : list) result.append(sub);
+        return result.toString();
     }
     public static void main(String[] args)
     {
-        String s = "PAYPALISHIRING";
-        System.out.println(convert(s, 1));
+        String s = "ABC";
+        System.out.println(convert(s, 2));
     }
    
 }
