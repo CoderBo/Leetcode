@@ -45,6 +45,10 @@ public class RecoverBinarySearchTree
         TreeNode temp = new TreeNode(2);
         first[0] = temp;
     }
+    static void change(TreeNode root)
+    {
+        root = new TreeNode(1);
+    }
     public static void main(String[] args)
     {
         TreeNode root = new TreeNode(5);
@@ -53,6 +57,8 @@ public class RecoverBinarySearchTree
         root.right = new TreeNode(9);
         root.right.left = new TreeNode(4);
         root.right.right = new TreeNode(13);
-        recoverTree(root);
+        TreeNode a = new TreeNode(0);
+        change(a);
+        System.out.println(a.val);
     }
 }

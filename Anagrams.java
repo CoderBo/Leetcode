@@ -35,10 +35,37 @@ public class Anagrams
         }
         return result;    
     }
-    
+    static ArrayList<String> anagrams2(String[] strs) {
+        Hashtable<String, ArrayList<String>> table = new Hashtable<String, ArrayList<String>>();
+        for(String s : strs)
+        {
+            char[] array = s.toCharArray();
+            Arrays.sort(array);
+            String key = new String(array);
+            if(array.length == 0) key = "";
+            if(table.containsKey(key))
+            {
+                ArrayList<String> temp = table.get(key);
+                temp.add(s);
+                table.put(key, temp);
+            }
+            else 
+            {
+                ArrayList<String> temp = new ArrayList<String>();
+                temp.add(s);
+                table.put(key, temp);
+            }
+        }
+        ArrayList<String> result = new ArrayList<String>();
+        for(String key : table.keySet())
+        {
+            if(table.get(key).size() > 1) result.addAll(table.get(key));
+        }
+        return result;
+    }
     public static void main(String[] args)
     {
-        String[] array = {"123","321","333","213"};
-        System.out.println(anagrams(array));
+        String[] array = {"",""};
+        System.out.println(anagrams2(array));
     }
 }
