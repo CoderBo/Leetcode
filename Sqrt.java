@@ -15,6 +15,17 @@ public class Sqrt
     {
         return (int)Math.sqrt(x);
     }
+    static int sqrt2(int x) {
+        if(x == 0) return x;
+        double pre = 0;
+        double y = 1;
+        while(pre != y)
+        {
+            pre = y;
+            y = (y + x / y) / 2;
+        }
+        return (int)y;
+    }
     public static void main(String[] args)
     {
         System.out.println(sqrt(668605518));
