@@ -5,6 +5,8 @@
 
 package leetcode;
 
+import java.util.ArrayList;
+
 
 /**
  * problem:Given n and k, return the kth permutation sequence.
@@ -12,33 +14,23 @@ package leetcode;
  */
 public class PermutationSequence 
 {
-    static int factorial(int n)
-    {
-        if(n == 1 || n == 0) return 1;
-        else return n * factorial(n - 1);
-    }
     static String getPermutation(int n, int k)
     {
-        String result = "";
-        int[] num = new int[n];
         k--;
-        for(int i = 0; i < n; i++)
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        for(int i = 1; i <= n; i++) numbers.add(i);
+        int[] factorial = new int[n + 1];
+        factorial[0] = 1;
+        for(int i = 1; i <= n; i++) factorial[i] = factorial[i - 1] * i;
+        String result = "";
+        for(int i = 1; i <= n; i++)
         {
-            num[i] = i + 1;
-        }
-        for(int i = n - 1; i >= 0; i--)
-        {
-            int times = k / factorial(i);
-            for(int j = 0; j <= times; j++)
-            {
-                if(num[j] == -1) times++;
-            }
-            result += num[times];
-            num[times] = -1;
-             
+            int index = k / factorial[n - i];
+            result += numbers.get(index);
+            numbers.remove(index);
+            k = k % factorial[n - i];
         }
         return result;
-        
     }
     public static void main(String[] args)
     {
