@@ -60,4 +60,57 @@ public class InsertInterval
         intervals.add(newInterval);
         return merge(intervals);
     }
+    
+    
+    static ArrayList<Interval> insert2(ArrayList<Interval> intervals, Interval newInterval) {
+        ArrayList<Interval> result = new ArrayList<Interval>();
+        if(newInterval == null) return intervals;
+        int a = Integer.MIN_VALUE;
+        Interval item = new Interval(a, a);
+        int i = 0;
+        for(; i < intervals.size(); i++)
+        {
+            Interval current = intervals.get(i);
+            if(newInterval.start > current.end) result.add(current);
+            if(newInterval.start >= current.start && newInterval.start <= current.end)
+            {
+                if(item.start == a) item.start = current.start;
+            }
+            if(newInterval.start < current.start)
+            {
+                if(item.start == a) item.start = newInterval.start;
+            }
+            if(newInterval.end < current.start)
+            {
+                item.end = newInterval.end;
+                result.add(item);
+                break;
+            }
+            if(newInterval.end >= current.start && newInterval.end <= current.end)
+            {
+                item.end = current.end;
+                result.add(item);
+                i++;
+                break;
+            }
+        }
+        for(; i< intervals.size(); i++) result.add(intervals.get(i));
+        if(item.start == a && item.end == a) result.add(newInterval);
+        else if(item.end == a)
+        {
+            item.end = newInterval.end;
+            result.add(item);
+        }
+        System.out.println(item.start + " " + item.end);
+        return result;
+    }
+    public static void main(String[] args)
+    {
+        ArrayList<Interval> list = new ArrayList<Interval>();
+        list.add(new Interval(1, 5));
+        list.add(new Interval(6, 8));
+        
+        insert2(list, new Interval(5, 6));
+   
+    }
 }
