@@ -44,8 +44,40 @@ public class MultiplyStrings
         String finalResult = result.toString();
         return finalResult.charAt(0) == '0'? finalResult.substring(1): finalResult;
     }
+    
+    
+    static String multiply2(String num1, String num2) {
+        if(num1.equals("0")) return num1;
+        if(num2.equals("0")) return num2;
+        int[] digits = new int[num1.length() + num2.length()];
+        for(int i = num2.length() - 1; i >= 0; i--)
+        {
+            int start = num2.length() - i - 1;
+            for(int j = num1.length()- 1; j >= 0; j--)
+            {
+                int m = num1.charAt(j) - 48;
+                int n = num2.charAt(i) - 48;
+                digits[start++] += m * n;
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < digits.length - 1; i++)
+        {
+            if(digits[i] >= 10)
+            {
+                digits[i + 1] += digits[i] / 10;
+                digits[i] = digits[i] % 10;
+            }
+            sb.append(digits[i]);
+        }
+        sb.append(digits[digits.length - 1]);
+        sb.reverse();
+        String result = sb.toString();
+        return result.charAt(0) == '0'? result.substring(1) : result;
+    }
     public static void main(String[] args)
     {
-        System.out.println(multiply("12345", "543211"));
+        System.out.println(multiply("9", "9"));
+        System.out.println(multiply2("9", "9"));
     }
 }
