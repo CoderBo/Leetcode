@@ -6,6 +6,7 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * problem:Given a string containing only digits,
@@ -75,9 +76,42 @@ public class RestoreIPAddresses
         if(s.length() == 0) return new ArrayList<String>();
         return restoreIpAddresses(s, 4);
     }
+    
+    static ArrayList<String> restoreIpAddresses2(String s) {
+        return restoreIpAddresses2(s, 4);
+    }
+    static ArrayList<String> restoreIpAddresses2(String s, int n)
+    {
+        ArrayList<String> result = new ArrayList<String>();
+        if(s.length() > n * 3 || s.length() < n) return result;
+        if(n == 1)
+        {
+            if(s.length() <= 2 && (s.equals("0") || s.charAt(0) != '0')) result.add(s);
+            else if(s.compareTo("256") < 0 && (s.equals("0") || s.charAt(0) != '0')) result.add(s);
+            else System.out.println(s);
+            return result;
+        }
+        for(int i = 1; i <= 3 && i <= s.length(); i++)
+        {
+            String head = s.substring(0, i);
+            if((head.length() <= 2 || head.compareTo("255") <= 0) && ((head.equals("0") || head.charAt(0) != '0')))
+            {
+                ArrayList<String> sub = restoreIpAddresses2(s.substring(i), n - 1);
+                if(!sub.isEmpty())
+                {
+                    for(String st : sub)
+                    {
+                        String item = head + "." + st;
+                        result.add(item);
+                    }
+                }
+            }
+        }
+        return result;
+    }
     public static void main(String[] args)
     {
         //System.out.println("1234".substring(4));
-        System.out.println(restoreIpAddresses("25525511135"));
+        System.out.println(restoreIpAddresses2("101023"));
     }
 }
