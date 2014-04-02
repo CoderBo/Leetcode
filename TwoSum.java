@@ -44,9 +44,24 @@ public class TwoSum
         }
         return result;
     }
+    
+    static int[] twoSum2(int[] numbers, int target) {
+        int[] result = new int[2];
+        HashSet<Integer> set = new HashSet<Integer>();
+        for(int i : numbers) set.add(i);
+        for(int i = 0; i < numbers.length; i++)
+        {
+            if(set.contains(target - numbers[i]))
+            {
+                if(result[0] == 0) result[0] = i + 1;
+                else result[1] = i + 1;
+            }
+        }
+        return result;
+    }
     public static void main(String[] args)
     {
         int[] numbers = {-1,0,1,2,-1,-4};
-        System.out.println(twoSum(numbers, 0)[0] + " " + twoSum(numbers, 0)[1]);
+        System.out.println(twoSum2(numbers, 0)[0] + " " + twoSum2(numbers, 0)[1]);
     }
 }
