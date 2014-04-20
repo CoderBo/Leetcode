@@ -118,6 +118,49 @@ public class WildcardMatching2
         }
         return false;
     }
+    
+    public static boolean isMatch2(String s, String p)
+    {
+        if(p.length() == 0) return s.length() == 0;
+        Hashtable<String, Boolean> table = new Hashtable<String, Boolean>();
+        StringBuilder temp = new StringBuilder();
+        temp.append(p.charAt(0));
+        for(int i = 1; i < p.length(); i++)
+        {
+            if(p.charAt(i) != '*' || temp.charAt(temp.length() - 1) != '*')
+                temp.append(p.charAt(i));
+        }
+        System.out.println(temp.toString());
+        return isMatch2(s, temp.toString(), table);
+    }
+    public static boolean isMatch2(String s, String p, Hashtable<String, Boolean> table) {
+        if(table.containsKey(s + " " + p)) return table.get(s + " " + p); 
+        if(s.equals(p)) return true;
+        if(p.equals("*")) return true;
+        if(p.length() == 0) return s.length() == 0;
+        if(p.length() == 1)
+        {
+            if(p.charAt(0) == '?') return s.length() == 1;
+            else return false;
+        }
+        if(p.charAt(0) != '*')
+        {
+            if(s.length() == 0) return false;
+            if(s.charAt(0) == p.charAt(0) || p.charAt(0) == '?')
+                return isMatch2(s.substring(1), p.substring(1), table);
+            else return false;
+        }
+        else
+        {
+            while(p.length() >= 1 && p.charAt(0) == '*') p = p.substring(1);
+            for(int i = 0; i < s.length(); i++)
+            {
+                if(isMatch2(s.substring(i), p, table)) return true;
+            }
+            table.put(s + " " + p, false);
+            return false;
+        }
+    }
     public static void main(String[] args)
     {
         System.out.println(isMatch("aba","a*a"));
@@ -128,7 +171,7 @@ public class WildcardMatching2
         System.out.println(isMatch("aa", "?*"));
         System.out.println(isMatch("aab", "c*a*b"));
         System.out.println(isMatch("aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a********b"));
-        System.out.println(isMatch("aabbbaabbabbbabbabbbaaabaaababbababaabbababaaaaabbaababbabaabbbaaabaaaabbbabaaabbabaaaaaaaababbaaaaabbbaabbabbaabbbbabbababbbabbbababbababaabaaabbababbababbbbaabaaababbbbbababbbbaaaaaaabbbabbbbbbabbaba", "**a*abbbb*a*ba****ba**a**a*ba**a****aaa**abaa****aa**aaaa*bbbbbaaa*bb**aaabaaaa*aab*ab*aaabbb*b**a*aa*a"));
+        System.out.println(isMatch2("aabbbaabbabbbabbabbbaaabaaababbababaabbababaaaaabbaababbabaabbbaaabaaaabbbabaaabbabaaaaaaaababbaaaaabbbaabbabbaabbbbabbababbbabbbababbababaabaaabbababbababbbbaabaaababbbbbababbbbaaaaaaabbbabbbbbbabbaba", "**a*abbbb*a*ba****ba**a**a*ba**a****aaa**abaa****aa**aaaa*bbbbbaaa*bb**aaabaaaa*aab*ab*aaabbb*b**a*aa*a"));
         System.out.println(isMatch("aab", "??*b"));
     }
 }

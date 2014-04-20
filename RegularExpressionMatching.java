@@ -13,52 +13,36 @@ import java.util.Hashtable;
  */
 public class RegularExpressionMatching 
 {
-    static boolean isMatch(String s, String p)
+    public static boolean isMatch(String s, String p)
     {
-        return isMatch2(s, p, new Hashtable<String, Boolean>());
+        Hashtable<String, Boolean> table = new Hashtable<String, Boolean>();
+        return isMatch(s, p, table);
     }
-    
-    static boolean check(String s)
-    {
-        for(int i = 0; i < s.length(); i++)
-        {
-            if(s.charAt(i) != '.') return false;
-        }
-        return true;
-    }
-    
-    static boolean isMatch2(String s, String p, Hashtable<String, Boolean> table)
-    {
-        if(table.containsKey(s + " " + p)) return table.get(s + " " + p);
+    public static boolean isMatch(String s, String p, Hashtable<String, Boolean> table) {
+        if(table.containsKey(s + " " + p)) return table.get(s + " " + p); 
         if(s.equals(p)) return true;
-        if(s.length() == p.length() && check(p)) return true;
-        if(p.length() == 0) return false;
-        if(p.length() == 1) return p.equals(".") && s.length() == p.length();
+        if(p.length() == 0) return s.length() == 0;
+        if(p.length() == 1)
+        {
+            if(p.charAt(0) == '.') return s.length() == 1;
+            else return false;
+        }
         if(p.charAt(1) != '*')
         {
             if(s.length() == 0) return false;
             if(s.charAt(0) == p.charAt(0) || p.charAt(0) == '.')
-            {
-                String newS = s.substring(1);
-                String newP = p.substring(1);
-                return isMatch2(newS, newP, table);
-            }
+                return isMatch(s.substring(1), p.substring(1), table);
             else return false;
         }
         else
         {
-            if(s.length() == 0 && p.charAt(p.length() - 1) != '*') return false;
-            if(isMatch2(s, p.substring(2), table)) return true;
-            if(isMatch2(s, p.charAt(0) + p.substring(2), table)) return true;
-            for(int i = 0; i < s.length() - 1; i++)
+            String base = "";
+            String item = p.substring(0, 1);
+            p = p.substring(2);
+            for(int i = 0; i < s.length() + 1; i++)
             {
-                StringBuilder duplicate = new StringBuilder();
-                for(int j = 0 ; j <= i; j++)
-                {
-                    duplicate.append(p.charAt(0));
-                }
-                String newP = p.charAt(0) + duplicate.toString() + p.substring(2);
-                if(isMatch2(s, newP, table)) return true;
+                if(isMatch(s, base + p, table)) return true;
+                base += item;
             }
             table.put(s + " " + p, false);
             return false;
@@ -73,7 +57,7 @@ public class RegularExpressionMatching
         System.out.println(isMatch("aa",".*"));
         System.out.println(isMatch("ab",".*"));
         System.out.println(isMatch("aab","c*a*b"));
-        System.out.println(isMatch("aaaaaaaaaaaaab","a*a*a*a*a*a*a*a*a*a*c"));
+        System.out.println(isMatch("baccbbcbcacacbbc","a*a*a*a*a*a*a*a*a*a*c"));
         System.out.println(isMatch("bbbc","b*c*"));
     }
 }
