@@ -5,7 +5,7 @@
 
 package leetcode;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * problem:Merge k sorted linked lists and return it as one sorted list.
@@ -96,5 +96,35 @@ public class MergekSortedLists
             result = mergeTwoLists(result, l);
         }
         return result.next;
+    }
+    
+    public static ListNode mergeKLists3(ArrayList<ListNode> lists)
+    {
+        if(lists.isEmpty()) return null;
+        Comparator<ListNode> comparator = new Comparator<ListNode>()
+        {
+            @Override
+            public int compare(ListNode list1, ListNode list2)
+            {
+                if(list1.val > list2.val) return 1;
+                else if(list1.val == list2.val) return 0;
+                else return -1;
+            }
+        };
+        PriorityQueue<ListNode> heap = new PriorityQueue<ListNode>(lists.size(), comparator);   
+        for(ListNode l : lists)
+        {
+            if(l != null) heap.add(l);
+        }
+        ListNode head = new ListNode(0);
+        ListNode p = head;
+        while(!heap.isEmpty())
+        {
+            ListNode temp = heap.poll();
+            p.next = temp;
+            if(temp.next != null) heap.add(temp.next);
+            p = p.next;
+        }
+        return head.next;
     }
 }

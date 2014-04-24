@@ -63,11 +63,52 @@ public class InterleavingString
         }
         else return false;
     }
+    
+    static boolean isInterleave2(String s1, String s2, String s3)
+    {
+        Hashtable<String, Boolean> table = new Hashtable<String, Boolean>();
+        return isInterleave(s1, s2, s3, table);
+    }
+    static boolean isInterleave(String s1, String s2, String s3,  Hashtable<String, Boolean> table) {
+        if(table.containsKey(s1 + " " + s2)) return table.get(s1 + " " + s2);
+        if(s3.length() == 0) return s1.length() == 0 && s2.length() == 0;
+        if(s1.length() == 0) return s2.equals(s3);
+        if(s2.length() == 0) return s1.equals(s3);
+        
+        char c1 = s1.charAt(0);
+        char c2 = s2.charAt(0);
+        char c3 = s3.charAt(0);
+        
+        if(c1 == c3 && c2 == c3)
+        {
+            boolean result = isInterleave(s1.substring(1), s2, s3.substring(1), table) || 
+                isInterleave(s1, s2.substring(1), s3.substring(1), table);
+            table.put(s1 + " " + s2, result);
+            return result;
+        }
+        else if(c1 == c3)
+        {
+            boolean result = isInterleave(s1.substring(1), s2, s3.substring(1), table);
+            table.put(s1 + " " + s2, result);
+            return result;
+        }
+        else if(c2 == c3)
+        {
+            boolean result = isInterleave(s1, s2.substring(1), s3.substring(1), table);
+            table.put(s1 + " " + s2, result);
+            return result;
+        }
+        else 
+        {
+            table.put(s1 + " " + s2, false);
+            return false;
+        }
+    }
     public static void main(String[] args)
     {
-        String s1 = "aabd";
-        String s2 = "abdc";
-        String s3 = "aabdabcd";
-        System.out.println(isInterleave(s1, s2, s3));
+        String s1 = "bbbbbabbbbabaababaaaabbababbaaabbabbaaabaaaaababbbababbbbbabbbbababbabaabababbbaabababababbbaaababaa";
+        String s2 = "babaaaabbababbbabbbbaabaabbaabbbbaabaaabaababaaaabaaabbaaabaaaabaabaabbbbbbbbbbbabaaabbababbabbabaab";
+        String s3 = "babbbabbbaaabbababbbbababaabbabaabaaabbbbabbbaaabbbaaaaabbbbaabbaaabababbaaaaaabababbababaababbababbbababbbbaaaabaabbabbaaaaabbabbaaaabbbaabaaabaababaababbaaabbbbbabbbbaabbabaabbbbabaaabbababbabbabbab";
+        System.out.println(isInterleave2(s1, s2, s3));
     }
 }
