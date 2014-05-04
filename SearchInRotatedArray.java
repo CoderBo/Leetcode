@@ -64,9 +64,22 @@ public class SearchInRotatedArray
         return -1;
     }
     
+    
+    static int search3(int[] A, int target) {
+        int start = 0;
+        int end = A.length - 1;
+        while(end - start > 1)
+        {
+            int mid = (end + start) / 2;
+            if(A[mid] < A[end]) end = mid;
+            else start = mid;
+        }
+        return end;
+    }
+    
     public static void main(String[] args)
     {
-        int[] array = {4, 5, 6, 7, 0, 1, 2};
-        System.out.println(search(array, 1));
+        int[] array = {4, 5, 6, 7, 8, 1, 2};
+        System.out.println(search3(array, 1));
     }
 }

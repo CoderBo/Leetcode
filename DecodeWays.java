@@ -21,30 +21,26 @@ import java.util.Hashtable;
  */
 public class DecodeWays 
 {
-    static Hashtable<String, Integer> table = new Hashtable<String, Integer>();
-    static int numDecodings(String s)
-    {
-        if(s == null || s.length() == 0) return 0;
-        else return numDecodings2(s);
+    public static int numDecodings(String s) {
+        if(s.length() == 0) return 0;
+        Hashtable<String, Integer> table = new Hashtable<String, Integer>();
+        return numDecodings(s, table);
     }
-    
-    static int numDecodings2(String s)
+    static int numDecodings(String s, Hashtable<String, Integer> table)
     {
         if(table.containsKey(s)) return table.get(s);
-        if(s == null || s.length() == 0) return 1;
-        if(s.equals("0")) return 0;
-        if(s.length() == 1) return 1;
-        if(Integer.parseInt(Character.toString(s.charAt(0))) == 0) return 0 * numDecodings2(s.substring(1));
-        int firstTwo = Integer.parseInt(Character.toString(s.charAt(0)) + Character.toString(s.charAt(1)));
+        if(!s.isEmpty() && s.charAt(0) == '0') return 0;
+        if(s.length() <= 1) return 1;
+        int firstTwo = Integer.parseInt(s.substring(0, 2));
         if(firstTwo > 26)
         {
-            int result = numDecodings2(s.substring(1));
+            int result = numDecodings(s.substring(1), table);
             table.put(s, result);
             return result;
         }
         else
         {
-            int result = numDecodings2(s.substring(1)) + numDecodings2(s.substring(2));
+            int result = numDecodings(s.substring(1), table) + numDecodings(s.substring(2), table);
             table.put(s, result);
             return result;
         }

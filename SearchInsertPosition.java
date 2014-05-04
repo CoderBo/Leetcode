@@ -24,6 +24,18 @@ public class SearchInsertPosition
         if(target < middle) return searchInsert(A, target, start, middleIndex - 1);
         else return searchInsert(A, target, middleIndex + 1, end);
     }
+    
+    static int searchInsert2(int[] A, int target) {
+        int start = -1;
+        int end = A.length;
+        while(end - start > 1)
+        {
+            int mid = (end - start) / 2 + start;
+            if(A[mid] >= target) end = mid;
+            else start = mid;
+        }
+        return end;
+    }
     public static void main(String[] args)
     {
         int[] array = {1, 3};
