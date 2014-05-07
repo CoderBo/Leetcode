@@ -35,9 +35,7 @@ public class SubstringwithConcatenationofAllWords
             String word = L[start];
             for(String s : sub)
             {
-                result.add(word + s);
-                result.add(s + word);
-                for(int i = 3; i < s.length(); i = i + 3)
+                for(int i = 0; i <= s.length(); i = i + L[0].length())
                 {
                     String head = s.substring(0, i);
                     String tail = s.substring(i);
@@ -109,11 +107,52 @@ public class SubstringwithConcatenationofAllWords
         }
         return result;
     }
+    
+    
+    static ArrayList<Integer> findSubstring3(String S, String[] L)
+    {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        if(L.length == 0 || S.length() < L[0].length() * L.length) return result;
+        int wordLength = L[0].length();
+        int sumLength = wordLength * L.length;
+        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        for(String word : L)
+        {
+            if(map.containsKey(word)) map.put(word, map.get(word) + 1);
+            else map.put(word, 1);
+        }
+        for(int i = 0; i <= S.length() - sumLength; i++)
+        {
+            String sub = S.substring(i, i + sumLength);
+            HashMap<String, Integer> map2 = (HashMap<String, Integer>) map.clone();
+            while(sub.length() >= wordLength)
+            {
+                String head = sub.substring(0, wordLength);
+                sub = sub.substring(wordLength);
+                if(!map2.containsKey(head)) break;
+                else
+                {
+                    int num = map2.get(head);
+                    if(num == 1)
+                    {
+                        map2.remove(head);
+                        if(map2.isEmpty())
+                        {
+                            result.add(i);
+                            break;
+                        }
+                    }
+                    else map2.put(head, num - 1);
+                }
+            }
+        }
+        return result;
+    }
     public static void main(String[] args)
     {
         String[] L = {"foo", "bar"};
         String s = "barfoothefoobarman";
         //System.out.println(generateSet(L, 0));
-        System.out.println(findSubstring(s, L));
+        System.out.println(findSubstring2(s, L));
     }
 }

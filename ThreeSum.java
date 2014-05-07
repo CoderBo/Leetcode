@@ -73,9 +73,64 @@ public class ThreeSum
         }
         return result;
     }
+    
+    
+    
+    static int removeDuplicate(int[] num)
+    {
+        int i = 0;
+        int j = 1;
+        while(j < num.length)
+        {
+            if(num[i] == num[j]) j++;
+            else num[++i] = num[j++];
+        }
+        return i;
+    }
+    static ArrayList<ArrayList<Integer>> twoSum(int[] num, int start, int end, int target)
+    {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        int i = start;
+        int j = end;
+        while(i < j)
+        {
+            if(num[i] + num[j] == target)
+            {
+                ArrayList<Integer> sub = new ArrayList<Integer>();
+                sub.add(num[i]);
+                sub.add(num[j]);
+                result.add(sub);
+                i++;
+                j--;
+            }
+            else if(num[i] + num[j] < target) i++;
+            else j--;
+        }
+        return result;
+    }
+    static ArrayList<ArrayList<Integer>> threeSum2(int[] num) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        if(num.length < 3) return result;
+        Arrays.sort(num);
+        System.out.println(2);
+        for(int i = 0; i < num.length - 2; i++)
+        {
+            if(i > 0 && num[i] == num[i - 1]) continue;
+            ArrayList<ArrayList<Integer>> sub = twoSum(num, i + 1, num.length - 1, -num[i]);
+            if(!sub.isEmpty())
+            {
+                for(ArrayList<Integer> a : sub)
+                {
+                    a.add(0, num[i]);
+                    result.add(a);
+                }
+            }
+        }
+        return result;
+    }
     public static void main(String[] arg)
     {
-        int[] num = {-1,0,1,2,-1,-4};
-        System.out.println(TwoSum(num, 0, 0));
+        int[] num = {-1,2,-1,-1};
+        System.out.println(threeSum2(num));
     }
 }
