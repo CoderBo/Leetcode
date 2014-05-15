@@ -98,9 +98,36 @@ public class CombinationSum
         }
         return result;
     }
+    
+    static ArrayList<ArrayList<Integer>> combinationSum3(int[] candidates, int target) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> sub = new ArrayList<Integer>();
+        Arrays.sort(candidates);
+        findCombination(0, candidates, target, result, sub);
+        return result;
+    }
+    static void findCombination(int start, int[] candidates, int target, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub)
+    {
+        System.out.println(sub);
+        if(target < 0) return;
+        else if(target == 0)
+        {
+            ArrayList<Integer> temp = (ArrayList<Integer>) sub.clone();
+            result.add(temp);
+        }
+        else
+        {
+            for(int i = start; i < candidates.length; i++)
+            {
+                sub.add(candidates[i]);
+                findCombination(i, candidates, target - candidates[i], result, sub);
+                sub.remove(sub.size() - 1);
+            }
+        }
+    }
     public static void main(String[] args)
     {
-        int[] condidates = {10,1,2,7,6,1,5};
-        System.out.println(combinationSum2(condidates, 8));
+        int[] condidates = {2,3,6,7};
+        System.out.println(combinationSum3(condidates, 7));
     }
 }

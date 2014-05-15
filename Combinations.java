@@ -78,12 +78,12 @@ public class Combinations
             {
                 sub.add(i);
                 setCombine(i + 1, k, n, result, sub);
-                sub.remove(sub.size() - 1);            
+                sub.remove(sub.size() - 1);   
             }
         }
     }
     public static void main(String[] args)
     {
-        System.out.println(combine(4, 3));
+        System.out.println(combine2(4, 3));
     }
 }

@@ -35,12 +35,12 @@ public class Subsets
         return result;
     }
     
-    public ArrayList<ArrayList<Integer>> subsets2(int[] S) {
+    static ArrayList<ArrayList<Integer>> subsets2(int[] S) {
         if(S.length == 0) return new ArrayList<ArrayList<Integer>>();
         Arrays.sort(S);
         return subsets(S, S.length - 1);
     }
-    public ArrayList<ArrayList<Integer>> subsets(int[] S, int index)
+    static ArrayList<ArrayList<Integer>> subsets(int[] S, int index)
     {
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
         if(index < 0)
@@ -59,10 +59,30 @@ public class Subsets
         }
         return result;
     }
+     static ArrayList<ArrayList<Integer>> subsets3(int[] S)
+     {
+         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+         ArrayList<Integer> sub = new ArrayList<Integer>();
+         generate(0, S, result, sub);
+         return result;
+     }
+     static void generate(int start, int[] S, ArrayList<ArrayList<Integer>> result, ArrayList<Integer> sub)
+     {
+         ArrayList<Integer> temp = (ArrayList<Integer>) sub.clone();
+         result.add(temp);
+         for(int i = start; i < S.length; i++)
+         {
+             sub.add(S[i]);
+             generate(i + 1, S, result, sub);
+             sub.remove(sub.size() - 1);
+         }
+     }
+     
+    
     public static void main(String[] arg)
     {
-        int[] array = {1,1};
-        ArrayList<ArrayList<Integer>> answer = subsets(array);
+        int[] array = {1,2,3};
+        ArrayList<ArrayList<Integer>> answer = subsets3(array);
         for(ArrayList<Integer> a : answer)
         {
             for(int i : a)
