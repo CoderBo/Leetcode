@@ -30,38 +30,31 @@ public class SortList
         ListNode result = merge(p1, p2);
         return result;
     }
-    static ListNode merge(ListNode p1, ListNode p2)
+    static ListNode merge(ListNode head1, ListNode head2)
     {
-        ListNode head = new ListNode(0);
-        ListNode p = head;
-        while(p1 != null && p2 != null)
+        ListNode preHead = new ListNode(0);
+        preHead.next = head1;
+        ListNode p = preHead;
+        while(head1 != null && head2 != null)
         {
-            if(p1.val < p2.val)
+            if(head1.val < head2.val)
             {
-                p.next = new ListNode(p1.val);
-                p = p.next;
-                p1 = p1.next;
+                head1 = head1.next;
             }
             else
             {
-                p.next = new ListNode(p2.val);
-                p = p.next;
-                p2 = p2.next;
+                ListNode temp = head2.next;
+                head2.next = p.next;
+                p.next = head2;
+                head2 = temp;
             }
-        }
-        while(p1 != null)
-        {
-            p.next = new ListNode(p1.val);
             p = p.next;
-            p1 = p1.next;
         }
-        while(p2 != null)
+        if(head2 != null)
         {
-            p.next = new ListNode(p2.val);
-            p = p.next;
-            p2 = p2.next;
+            p.next = head2;
         }
-        return head.next;
+        return preHead.next;
     }
     public static void main(String[] args)
     {
