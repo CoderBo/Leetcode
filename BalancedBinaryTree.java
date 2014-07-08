@@ -63,6 +63,22 @@ public class BalancedBinaryTree
             return false;
         }
     }
+    
+    ///////////////////////////////////////////////////////////////
+    static boolean isBalanced = true;
+    public static boolean isBalanced3(TreeNode root) {
+        getHeight2(root);
+        return isBalanced;
+    }
+    public static int getHeight2(TreeNode root)
+    {
+        if(root == null) return 0;
+        int leftHeight = getHeight(root.left);
+        int rightHeight = getHeight(root.right);
+        isBalanced &= Math.abs(leftHeight - rightHeight) <= 1;
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+    ///////////////////////////////////////////////////////////////
     public static void main(String[] args)
     {
         TreeNode root  = new TreeNode(5);

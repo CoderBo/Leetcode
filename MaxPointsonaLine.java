@@ -5,9 +5,9 @@
 
 package leetcode;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Hashtable;
+
+import java.util.HashMap;
+
 
 /**
  * problem:Given n points on a 2D plane, 
@@ -25,37 +25,32 @@ public class MaxPointsonaLine
 {
      static int maxPoints(Point[] points)
      {
-        if(points.length <= 2) return points.length;
-        Hashtable<Double, Integer> table = new Hashtable<Double, Integer>();
-        int max = 0;
-        for(int i = 0; i < points.length; i++)
+        HashMap<Double, Integer> map = new HashMap<Double, Integer>();
+        int result = 0;
+        for(int i = 0; i < points.length; i++)    
         {
-            table.clear();
-            int duplicate = 0;
+            map.clear();
+            int dup = 0;
+            map.put(Double.MIN_VALUE, 1);
             for(int j = i + 1; j < points.length; j++)
             {
                 if(points[i].x == points[j].x && points[i].y == points[j].y)
                 {
-                    duplicate++;
+                    dup++;
                     continue;
                 }
-                double sloup = 0;
-                if(points[i].x == points[j].x) sloup = Integer.MAX_VALUE;
-                else if(points[i].y == points[j].y) sloup = 0.0;
-                else sloup = 1.0 * (points[i].y - points[j].y) / (points[i].x - points[j].x);
-                if(table.containsKey(sloup))
-                {
-                    int time = table.get(sloup);
-                    time++;
-                    table.put(sloup, time);
-                }
-                else table.put(sloup, 1);
+                double key = points[i].x == points[j].x? Double.MAX_VALUE : 
+                               0.0 + (double)(points[i].y - points[j].y) / (double)(points[i].x - points[j].x);
+                if(map.containsKey(key)) map.put(key, map.get(key) + 1);
+                else map.put(key, 2);
             }
-            int subMax = duplicate + 1;
-            for(int a : table.values()) subMax = Math.max(subMax, a + 1 + duplicate);
-            max = Math.max(max, subMax);
+            for(int a : map.values())
+            {
+                result = Math.max(result, a + dup);
+            }
         }
-        return max;
+        return result;
+    
     }
     public static void main(String[] args)
     {

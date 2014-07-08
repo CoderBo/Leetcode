@@ -11,6 +11,7 @@ package leetcode;
  * of the stock), design an algorithm to find the maximum profit.
  * @author chenbo
  */
+
 public class BestTimetoBuyandSellStock 
 {
     static int maxProfit(int[] prices)

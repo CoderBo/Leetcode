@@ -80,6 +80,9 @@ public class Permutations
         System.out.println(set.size());
         return result;
     }
+    
+    
+    
     public static void main(String[] args)
     {
         int[] array = {0,0,1};

@@ -46,8 +46,34 @@ public class ValidPalindrome
         }
         return true;
     }
+    
+    public static boolean isPalindrome3(String s) {
+        if(s.length() == 0) return true;
+        int i = 0;
+        int j = s.length() - 1;
+        while(i < j)
+        {
+            char a, b;
+            while(i < j && !(s.charAt(i) >= 'a' && s.charAt(i) <= 'z' || s.charAt(i) >= 'A' && s.charAt(i) <= 'Z' || (s.charAt(i) >= '0' && s.charAt(i) <= '9'))) 
+                i++;
+            while(i < j && !(s.charAt(j) >= 'a' && s.charAt(j) <= 'z' || s.charAt(j) >= 'A' && s.charAt(j) <= 'Z' || (s.charAt(j) >= '0' && s.charAt(j) <= '9'))) 
+                j--;
+            if(s.charAt(i) >= 'A' && s.charAt(i) <= 'Z') a = (char) (s.charAt(i) + 32);
+            else a = s.charAt(i);
+            if(s.charAt(j) >= 'A' && s.charAt(j) <= 'Z') b = (char) (s.charAt(j) + 32);
+            else b = s.charAt(j);
+            if(a == b)
+            {
+                i++;
+                j--;
+            }
+            else return false;
+        }
+        return true;
+    }
+    
     public static void main(String[] args)
     {
-        System.out.println(isPalindrome("1a2"));
+        System.out.println(isPalindrome3("1a2"));
     }
 }

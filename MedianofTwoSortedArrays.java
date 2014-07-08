@@ -37,10 +37,28 @@ public class MedianofTwoSortedArrays
             return (array[array.length / 2] + array[array.length / 2 - 1]) / 2.0;
         }
     }
+    
+    static int findKth(int[] A, int[] B, int aStart, int aEnd, int bStart, int bEnd, int k)
+    {
+        int aLength = aEnd - aStart + 1;
+        int bLength = bEnd - bStart + 1;
+        if(aLength > bLength) return findKth(B, A, bStart, bEnd, aStart, aEnd, k);
+        if(aEnd < aStart) return B[bStart + k];
+        if(k == 1) return Math.min(A[aStart], B[bStart]);
+        int pa = Math.min(k / 2, aLength);
+        int pb = k - pa;
+        if(A[aStart + pa - 1] == B[bStart + pb - 1]) return A[aStart + pa - 1];
+        else if(A[aStart + pa - 1] < B[bStart + pb - 1]) return findKth(A, B, aStart + pa, aEnd, bStart, bEnd, k - pa);
+        else return findKth(A, B, aStart, aEnd, bStart, bEnd - pb, k - pb);
+    }
+    static double findKth(int[] A, int[] B, int k)
+    {
+        return findKth(A, B, 0, A.length - 1, 0, B.length - 1, k);
+    }
     public static void main(String[] args)
     {
-        int[] a = {1,1};
-        int[] b = {1,2};
-        System.out.println(findMedianSortedArrays(a, b));
+        int[] a = {1,3,4,5,7,9,12};
+        int[] b = {2,4,5,8,11,13};
+        System.out.println(findKth(a, b, 3));
     }
 }

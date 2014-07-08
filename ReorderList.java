@@ -52,14 +52,54 @@ public class ReorderList
             q = nextQ;
         }
     }
+    
+    static ListNode reverse(ListNode head)
+    {
+        if(head == null || head.next == null) return head;
+        ListNode p = head;
+        ListNode q = head.next;
+        while(q != null)
+        {
+            ListNode r = q.next;
+            q.next = p;
+            p = q;
+            q = r;
+        }
+        return p;
+    }
+    public static void reorderList2(ListNode head) {
+        if(head == null || head.next == null) return;
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast != null && fast.next != null)
+        {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        ListNode newHead = slow.next;
+        slow.next = null;
+        newHead = reverse(newHead);
+        ListNode p = head;
+        ListNode q = newHead;
+        while(p != null && q != null)
+        {
+            ListNode nextP = p.next;
+            ListNode nextQ = q.next;
+            p.next = q;
+            q.next = nextP;
+            p = nextP;
+            q = nextQ;
+        }
+    }
     public static void main(String[] args)
     {
         ListNode head = new ListNode(1);
         head.next = new ListNode(2);
         head.next.next = new ListNode(3);
         head.next.next.next = new ListNode(4);
-        //head.next.next.next.next = new ListNode(5);
-        reorderList(head);
+        head.next.next.next.next = new ListNode(5);
+        
+        head = reverse(head);
         while(head != null)
         {
             System.out.println(head.val);
